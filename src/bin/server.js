@@ -1,9 +1,10 @@
 require('dotenv').config({path:'../rewaa-backend/.env'})
 const http = require('http')
 const {port} = require('../vars')
+const {app,logger} = require('../middleware')
 var cluster = require('cluster')
 
-const server = http.createServer() // including express middleware
+const server = http.createServer(app) // including express middleware
 const numCPUs = require('os').cpus().length // cpu cores
 
 
@@ -23,6 +24,7 @@ if (cluster.isMaster) {
     server.listen(port,
         ()=>{
             console.log(`Server started running on port ${port}`)
+            logger.log('info',`Server started running on port ${port}`)
         }
     )
 }

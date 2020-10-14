@@ -1,0 +1,27 @@
+{
+  "name": "rewaa-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/bin/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puneet2081993/rewaa-backend.git"
+  },
+  "author": "puneet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/puneet2081993/rewaa-backend/issues"
+  },
+  "homepage": "https://github.com/puneet2081993/rewaa-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "winston": "^3.3.3"
+  }
+}

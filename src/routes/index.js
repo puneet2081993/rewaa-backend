@@ -1,6 +1,7 @@
 const express = require('express')
 const rewaa = express()
 const {inventoryRoute} = require('./inventoryRoute')
+const {userRoute} = require('./userRoute')
 
 rewaa.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -9,6 +10,7 @@ rewaa.use(function(req, res, next) {
 });
 
 rewaa.use(inventoryRoute)
+rewaa.use(userRoute)
 
 module.exports = {
     rewaa

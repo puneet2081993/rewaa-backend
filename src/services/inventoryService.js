@@ -1,66 +1,73 @@
 var mysql_con = require('../database/MySql')
-var pdata = [
-    {"pid":"1234","pname":"asd","ptype":"sad","pqty":"1","orgID":"122"},
-    {"pid":"12345","pname":"asd","ptype":"sad","pqty":"1","orgID":"122"}
-];
 
-let getProducts = async (orgID,pid)=> {
-    try{
-        orgID = orgID?String(orgID):null
-        pid   = pid?pid:null
-        if(!orgID || orgID==null){
-            throw new Error("Invalid OrgID");
-        }else{
-            return pdata;
-        }
-    }catch(e){
-        throw new Error(e)
-    }
+let getProducts = (orgID,pid)=> {
+    return new Promise((resolve,reject)=>{
+            orgID = orgID?String(orgID):null
+            pid   = pid?pid:null
+            var response = {}
+
+            if(!orgID || orgID==null){
+                reject(new Error("Invalid Request"));
+            }else{
+                let dbquery = `SELECT * FROM revaa.inventory WHERE orgID=${orgID} AND status='A' `;
+                if(pid || pid!=null){
+                    dbquery += `AND productID=${pid}`;
+                }
+                mysql_con.query(dbquery, function (err, result) {
+                    if (err) reject(err);
+                    response = JSON.parse(JSON.stringify(result));
+                    resolve(response);
+                })
+            }
+    });
 }
 
 let addProducts = async (data)=> {
-    try{
-        let response = {}
-        if(!data || data==null){
-            throw new Error("Invalid data");
-        }else{
-            let dbquery = `INSERT INTO inventory (productName,productType,quantity,status,created_by,orgID) VALUES ('${data.pname}','${data.ptype}',${data.pqty},'A','${data.created_by}','${data.orgID}')`;
-            await mysql_con.query(dbquery, function (err, result) {
-                if (err) throw err;
-                console.log("Inserted ID : "+result.insertId)
-                response = result;
-            })
-        }
-        return response;
-    }catch(e){
-        throw new Error(e)
-    }
+    return new Promise((resolve,reject)=>{
+            let response = {}
+            if(!data || data==null){
+                reject(new Error("Invalid Request"));
+            }else{
+                let dbquery = `INSERT INTO inventory (productName,productType,quantity,status,created_by,orgID) VALUES ('${data.pname}','${data.ptype}',${data.pqty},'A','${data.created_by}','${data.orgID}')`;
+                mysql_con.query(dbquery, function (err, result) {
+                    if (err) reject(err);
+                    response = result;
+                    resolve(response);
+                })
+            }
+    });
 }
 
-let updateProducts = async (pid)=> {
-    pid   = pid?pid:null
-    try{
-        if(!pid || pid==null){
-            throw new Error("Invalid data");
+let updateProducts = async (data)=> {
+    return new Promise((resolve,reject)=>{
+        let pid  = data.pid?data.pid:null
+        if(!data || pid==null){
+            reject(new Error("Invalid Request"));
         }else{
-            return pdata;
+            let dbquery = `UPDATE inventory SET productName = '${data.pname}', productType = '${data.ptype}', quantity = ${data.pqty} , updated_by = '${data.updated_by}' WHERE productID = ${pid}`;
+            mysql_con.query(dbquery, function (err, result) {
+                if (err) reject(err);
+                response = result;
+                resolve(response);
+            })
         }
-    }catch(e){
-        throw new Error(e)
-    }
+    });
 }
 
 let deleteProducts = async (pids)=> {
-    try{
-        pids   = pids?pids:null
+    return new Promise((resolve,reject)=>{
+        pids = pids?pids:null
         if(!pids || pids.length == 0){
-            throw new Error("Invaid PID's");
+            reject(new Error("Invalid Request"));
         }else{
-            return pdata;
+            let dbquery = `UPDATE inventory SET status = 'D' WHERE productID IN(?)`;
+            mysql_con.query(dbquery,[pids], function (err, result) {
+                if (err) reject(err);
+                response = result;
+                resolve(response);
+            })
         }
-    }catch(e){
-        throw new Error(e)
-    }
+    });
 }
 
 module.exports = {

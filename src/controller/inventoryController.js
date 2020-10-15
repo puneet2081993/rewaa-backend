@@ -5,7 +5,7 @@ let getProducts = async (req,res,next) => {
     try{
         let result
         if(req.params.orgID){
-            result = await inventoryService.getProducts(req.params.orgID,req.query.pid)
+            result = await inventoryService.getProducts(req.params.orgID,req.query.pid);
             res.status(200).send(result)
         }
         else {
@@ -34,7 +34,6 @@ let addProducts = async (req,res,next) => {
 let updateProducts = async (req,res,next) => {
     try{
         let result
-        console.log(req.body);
         if(req.body){
             result = await inventoryService.updateProducts(req.body)
             res.status(200).send(result)
@@ -50,7 +49,6 @@ let updateProducts = async (req,res,next) => {
 let deleteProducts = async (req,res,next) => {
     try{
         let result
-        console.log(req.body);
         if(req.body){
             result = await inventoryService.deleteProducts(req.body)
             res.status(200).send(result)
@@ -62,8 +60,6 @@ let deleteProducts = async (req,res,next) => {
         next(err)
     }
 }
-
-
 
 // exporting all controller functions
 module.exports = {

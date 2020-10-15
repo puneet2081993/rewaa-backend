@@ -4,7 +4,8 @@ This is hiring assignment for Rewaa Technologies.
 Implement a simple full-stack inventory management application as a SPA (Single Page Application) based on Angular and NodeJs. You need to create two different projects for that; Frontend and Backend.
 
 ## Technologies/Dependecies
-Frontend : Angular 8+
+Frontend : Angular 8+ 
+[https://github.com/puneet2081993/RewaaWeb]
 
 Backend : Node.js, Express.js,
 
@@ -30,6 +31,12 @@ Libraries: body-parse, dotenv, winston, mysql , md5
 **npm start**
 
 **npm test**
+
+## Dummy User Credentials
+
+**username**  : rewaa.admin
+
+**password** : asdjkl
 
 ## API REFERENCES
 

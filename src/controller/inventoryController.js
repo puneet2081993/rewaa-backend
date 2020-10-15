@@ -19,8 +19,7 @@ let getProducts = async (req,res,next) => {
 let addProducts = async (req,res,next) => {
     try{
         let result
-        console.log(req.body);
-        if(req.body){
+        if(req.body && req.body.orgID){
             result = await inventoryService.addProducts(req.body)
             res.status(200).send(result)
         }

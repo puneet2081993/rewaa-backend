@@ -49,9 +49,9 @@ let updateProducts = async (req,res,next) => {
 let deleteProducts = async (req,res,next) => {
     try{
         let result
-        let pids = req.body.pid;
-        if(pid.isArray(emptyArray) && pid.length){
-            result = await inventoryService.deleteProducts(req.body.pid)
+        let pid = req.body.pid;
+        if(Array.isArray(pid) && pid.length){
+            result = await inventoryService.deleteProducts(pid)
             res.status(200).send(result)
         }
         else {

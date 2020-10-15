@@ -9,7 +9,7 @@ let getProducts = (orgID,pid)=> {
             if(!orgID || orgID==null){
                 reject(new Error("Invalid Request"));
             }else{
-                let dbquery = `SELECT * FROM revaa.inventory WHERE orgID=${orgID} AND status='A' `;
+                let dbquery = `SELECT * FROM inventory WHERE orgID='${orgID}' AND status='A' `;
                 if(pid || pid!=null){
                     dbquery += `AND productID=${pid}`;
                 }
